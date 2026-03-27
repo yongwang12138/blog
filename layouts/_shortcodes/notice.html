@@ -1,0 +1,12 @@
+{{- $rawType := lower (or (.Get "type") (.Get 0) "info") -}}
+{{- $kind := "info" -}}
+{{- if in (slice "warning" "warn") $rawType -}}
+  {{- $kind = "warning" -}}
+{{- else if in (slice "error" "danger" "failed" "failure") $rawType -}}
+  {{- $kind = "danger" -}}
+{{- else if in (slice "tip" "note" "info" "success") $rawType -}}
+  {{- $kind = "info" -}}
+{{- end -}}
+<blockquote class="book-hint {{ $kind }}">
+{{ .Inner | safeHTML -}}
+</blockquote>

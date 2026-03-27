@@ -1,0 +1,172 @@
+{{ define "main" }}
+<div class="vp-home">
+  <header class="vp-nav">
+    <div class="vp-nav-left">
+      <a class="vp-brand" href="/">
+        <img src="/brand.svg" alt="logo" />
+        <span>Mars星球</span>
+      </a>
+      <button class="vp-search" type="button" aria-label="Search" data-search-open>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="m14.386 14.386 4.088 4.088-4.088-4.088A7.533 7.533 0 1 1 3.733 3.733a7.533 7.533 0 0 1 10.653 10.653z" />
+        </svg>
+        <span>搜索文档</span>
+        <kbd>Ctrl K</kbd>
+      </button>
+    </div>
+    <div class="vp-nav-right">
+      <nav class="vp-links">
+        <a href="/">主页</a>
+        <a href="/posts/">示例</a>
+        <a href="/docs/">Linux</a>
+        <a href="/docs/">教程</a>
+      </nav>
+
+      <button class="vp-switch" type="button" aria-label="Theme" role="switch" aria-checked="false" data-theme-toggle>
+        <span class="vp-switch-track-icons">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21 14.5A8.5 8.5 0 0 1 9.5 3a9 9 0 1 0 11.5 11.5z"></path>
+          </svg>
+        </span>
+        <span class="vp-switch-thumb"></span>
+      </button>
+
+      {{ with .Site.Params.BookRepo }}
+      <a class="vp-github" href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.58 2 12.24c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.5 0-.25-.01-1.07-.01-1.94-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .07 1.52 1.05 1.52 1.05.88 1.56 2.3 1.1 2.87.84.09-.66.35-1.1.63-1.36-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.74-.1-.27-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.04A9.3 9.3 0 0 1 12 7.09a9.3 9.3 0 0 1 2.5.35c1.9-1.33 2.75-1.04 2.75-1.04.55 1.4.2 2.44.1 2.71.64.7 1.03 1.62 1.03 2.74 0 3.95-2.34 4.81-4.57 5.07.36.32.67.95.67 1.92 0 1.39-.01 2.5-.01 2.84 0 .28.18.61.69.5A10.26 10.26 0 0 0 22 12.24C22 6.58 17.52 2 12 2z"/>
+        </svg>
+      </a>
+      {{ end }}
+    </div>
+  </header>
+
+  <section class="vp-hero">
+    <div class="vp-hero-info">
+      <h1>
+        <span class="hero-name">Mars星球</span>
+        <span class="hero-text">一个 VitePress 博客</span>
+      </h1>
+      <p class="hero-tagline">将有一天你会拥有美好的一切</p>
+      <div class="hero-actions">
+        <a class="vp-btn brand" href="/posts/">Markdown 示例</a>
+        <a class="vp-btn alt" href="/docs/">API 示例</a>
+        {{ with .Site.Params.BookRepo }}
+        <a class="vp-btn brand" href="{{ . }}" target="_blank" rel="noopener">View on GitHub</a>
+        {{ end }}
+      </div>
+    </div>
+    <div class="vp-hero-image">
+      <div class="vp-image-wrap">
+        <div class="vp-image-bg" aria-hidden="true"></div>
+        <img class="vp-image-src" src="/background.svg" alt="背景图" />
+      </div>
+    </div>
+  </section>
+
+  <section class="vp-features">
+    <article class="vp-feature">
+      <div class="icon">📝</div>
+      <h3>专注内容</h3>
+      <p>只需 Markdown 即可轻松创建美观文档站点。</p>
+    </article>
+    <article class="vp-feature">
+      <div class="icon">🛠️</div>
+      <h3>特性 B</h3>
+      <p>特性 B 的详细描述</p>
+    </article>
+    <article class="vp-feature">
+      <div class="icon">🚀</div>
+      <h3>特性 C</h3>
+      <p>特性 C 的详细描述</p>
+    </article>
+  </section>
+
+  <div class="vp-search-modal" hidden data-search-modal>
+    <div class="vp-search-backdrop" data-search-close></div>
+    <div class="vp-search-panel" role="dialog" aria-modal="true" aria-label="搜索">
+      <div class="vp-search-head">
+        <input type="text" placeholder="输入关键词搜索..." data-search-input />
+        <button type="button" data-search-close>Esc</button>
+      </div>
+      <div class="vp-search-results" data-search-results></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const modal = document.querySelector('[data-search-modal]');
+  const input = document.querySelector('[data-search-input]');
+  const results = document.querySelector('[data-search-results]');
+  const openers = document.querySelectorAll('[data-search-open]');
+  const closers = document.querySelectorAll('[data-search-close]');
+  if (!modal || !input || !results || !openers.length) return;
+
+  const pages = {{- $pages := where .Site.RegularPages "Draft" "!=" true -}}
+    {{- $items := slice -}}
+    {{- range $pages -}}
+      {{- $items = $items | append (dict
+        "title" .Title
+        "url" .RelPermalink
+        "section" .Section
+        "summary" (or .Description (.Summary | plainify | truncate 120))
+      ) -}}
+    {{- end -}}
+    {{- $items | jsonify | safeJS -}};
+
+  const render = (q) => {
+    const keyword = q.trim().toLowerCase();
+    const matched = keyword
+      ? pages.filter(p =>
+          (p.title && p.title.toLowerCase().includes(keyword)) ||
+          (p.summary && p.summary.toLowerCase().includes(keyword))
+        ).slice(0, 30)
+      : pages.slice(0, 20);
+
+    if (!matched.length) {
+      results.innerHTML = '<p class="empty">没有找到结果</p>';
+      return;
+    }
+
+    results.innerHTML = matched.map(p => `
+      <a class="vp-result" href="${p.url}">
+        <div class="title">${p.title || 'Untitled'}</div>
+        <div class="meta">${p.section || ''}</div>
+        <div class="desc">${p.summary || ''}</div>
+      </a>
+    `).join('');
+  };
+
+  const open = () => {
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    input.value = '';
+    render('');
+    setTimeout(() => input.focus(), 0);
+  };
+
+  const close = () => {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  };
+
+  openers.forEach(btn => btn.addEventListener('click', open));
+  closers.forEach(btn => btn.addEventListener('click', close));
+  input.addEventListener('input', () => render(input.value));
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      open();
+      return;
+    }
+    if (e.key === 'Escape' && !modal.hidden) close();
+  });
+})();
+</script>
+{{ end }}

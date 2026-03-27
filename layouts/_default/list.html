@@ -1,0 +1,18 @@
+{{ define "main" }}
+<section class="content-wrap">
+  <header class="content-head">
+    <h1>{{ .Title }}</h1>
+    {{ with .Content }}<div class="content-body">{{ . }}</div>{{ end }}
+  </header>
+
+  <div class="post-list">
+    {{ range .Pages.ByDate.Reverse }}
+    <article class="post-item">
+      <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+      <p class="meta">{{ .Date.Format "2006-01-02 15:04" }}</p>
+      <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 140 }}{{ end }}</p>
+    </article>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

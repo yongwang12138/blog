@@ -1,0 +1,123 @@
+baseURL = 'https://example.com/'
+title = 'Mars星球'
+languageCode = 'zh-cn'
+defaultContentLanguage = 'zh-cn'
+hasCJKLanguage = true
+timeZone = 'Asia/Shanghai'
+enableRobotsTXT = true
+enableGitInfo = false
+disablePathToLower = true
+summaryLength = 120
+paginate = 10
+copyright = 'CC BY-NC-SA 4.0'
+disqusShortname = ''
+
+[sitemap]
+  changefreq = 'weekly'
+  priority = 0.5
+  filename = 'sitemap.xml'
+
+[permalinks]
+  posts = '/posts/:year/:month/:slug/'
+
+[taxonomies]
+  tag = 'tags'
+  category = 'categories'
+  series = 'series'
+
+[outputs]
+  home = ['HTML', 'RSS']
+  section = ['HTML', 'RSS']
+  taxonomy = ['HTML', 'RSS']
+  term = ['HTML', 'RSS']
+
+[privacy]
+  [privacy.youtube]
+    privacyEnhanced = true
+  [privacy.x]
+    enableDNT = true
+  [privacy.vimeo]
+    enableDNT = true
+
+[services]
+  [services.googleAnalytics]
+    id = ''
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.tableOfContents]
+    startLevel = 1
+    endLevel = 3
+    ordered = false
+  [markup.highlight]
+    style = 'github'
+    lineNos = true
+    lineNumbersInTable = false
+    codeFences = true
+  [markup.parser]
+    [markup.parser.attribute]
+      block = true
+      title = true
+
+[languages]
+  [languages.zh-cn]
+    languageName = 'Simplified Chinese'
+    languageCode = 'zh-CN'
+    weight = 1
+    contentDir = 'content'
+    [languages.zh-cn.params]
+      description = 'Tech notes, reading, and life logs.'
+
+[menu]
+  [[menu.home]]
+    name = 'Docs'
+    pageRef = '/docs/'
+    weight = 10
+  [[menu.home]]
+    name = 'Posts'
+    pageRef = '/posts/'
+    weight = 20
+  [[menu.home]]
+    name = 'About'
+    pageRef = '/about/'
+    weight = 30
+
+  [[menu.after]]
+    name = 'GitHub'
+    url = 'https://github.com/'
+    weight = 10
+  [[menu.after]]
+    name = 'RSS'
+    url = '/index.xml'
+    weight = 20
+
+[params]
+  author = 'Your Name'
+  description = 'A blog powered by Hugo and Hugo Book theme.'
+  keywords = ['blog', 'hugo', 'book-theme', 'tech']
+
+  # Hugo Book main params
+  BookTheme = 'auto'
+  BookToC = true
+  BookLogo = 'logo.svg'
+  BookFavicon = 'favicon.svg'
+  BookSection = 'docs'
+  BookRepo = 'https://github.com/yongwang12138'
+  BookLastChangeLink = '{{ .Site.Params.BookRepo }}/commit/{{ .GitInfo.Hash }}'
+  BookEditLink = '{{ .Site.Params.BookRepo }}/edit/main/content/{{ .Path }}'
+  BookDateFormat = '2006-01-02 15:04'
+  BookSearch = true
+  BookComments = true
+  BookPortableLinks = 'warning'
+  BookServiceWorker = false
+  BookTranslatedOnly = false
+
+  # Optional Giscus comments (used when disqusShortname is empty)
+  [params.giscus]
+    repo = ''
+    repoId = ''
+    category = 'General'
+    categoryId = ''
+    mapping = 'pathname'
