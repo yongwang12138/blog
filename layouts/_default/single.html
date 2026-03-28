@@ -1,11 +1,148 @@
-{{ define "main" }}
-<article class="content-wrap">
-  <header class="content-head">
-    <h1>{{ .Title }}</h1>
-    {{ with .Date }}<p>{{ .Format "2006-01-02 15:04" }}</p>{{ end }}
-  </header>
-  <div class="content-body">
-    {{ .Content }}
+﻿{{ define "main" }}
+{{- $home := .Site.Params.home -}}
+{{- $logo := or $home.logo "/brand.svg?v=4" -}}
+{{- $searchButtonText := or $home.searchButtonText "搜索文档" -}}
+{{- $socialGithub := or $home.socialGithub "https://github.com/" -}}
+{{- $tutorialMenuTitle := or $home.tutorialMenuTitle "教程" -}}
+{{- $tutorialCategory := or $home.tutorialCategory "教程" -}}
+{{- $allPosts := where .Site.RegularPages "Section" "posts" -}}
+{{- $tutorialPages := where $allPosts "Params.categories" "intersect" (slice $tutorialCategory) -}}
+{{- $docLayout := .Site.Params.docLayout -}}
+{{- $leftColumn := or $docLayout.leftColumn "390px" -}}
+{{- $rightColumn := or $docLayout.rightColumn "1fr" -}}
+{{- $leftContentInset := or $docLayout.leftContentInset "32px" -}}
+{{- $searchPlaceholder := or $home.searchPlaceholder "输入关键词" -}}
+{{- $searchNoResults := or $home.searchNoResults "无法找到相关结果" -}}
+
+<div class="doc-layout" style="--doc-left-width: {{ $leftColumn }}; --doc-right-width: {{ $rightColumn }}; --doc-left-pad: {{ $leftContentInset }};">
+  <aside class="doc-left">
+    <div class="doc-left-top">
+      <a class="doc-brand" href="/">
+        <img class="doc-brand-logo" src="{{ $logo }}" alt="{{ .Site.Title }}">
+        <span class="doc-brand-text">{{ .Site.Title }}</span>
+      </a>
+    </div>
+
+    <div class="doc-left-bottom">
+      <h2 class="doc-side-title">{{ $tutorialMenuTitle }}</h2>
+      <nav class="doc-side-nav">
+        {{- range sort $tutorialPages "Title" "asc" }}
+        <a class="doc-side-link{{ if eq .RelPermalink $.RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}">{{ .Title }}</a>
+        {{- end }}
+      </nav>
+    </div>
+  </aside>
+
+  <section class="doc-right">
+    <header class="VPNavBar doc-top-vp" data-v-7ad780c2 data-v-9fd4d1dd>
+      <div class="wrapper" data-v-9fd4d1dd>
+        <div class="container doc-top-container" data-v-9fd4d1dd>
+          <div class="content" data-v-9fd4d1dd>
+            {{ partial "nav-content.html" (dict "Page" . "NavAriaId" "doc-nav-aria-label") }}
+          </div>
+        </div>
+      </div>
+      <div class="divider" data-v-9fd4d1dd><div class="divider-line" data-v-9fd4d1dd></div></div>
+    </header>
+
+    <div class="doc-content-wrap">
+      <main class="doc-main vp-doc">
+        {{ .Content }}
+      </main>
+
+      <aside class="doc-toc">
+        <h2>閺傚洨鐝烽惄顔肩秿</h2>
+        <div class="doc-toc-content">
+          {{ .TableOfContents }}
+        </div>
+      </aside>
+    </div>
+  </section>
+</div>
+<div class="VPLocalSearchBox" data-v-68e678c9 hidden data-search-modal>
+  <div class="backdrop" data-v-68e678c9 data-search-close></div>
+  <div class="shell" data-v-68e678c9 role="dialog" aria-modal="true" aria-label="搜索">
+    <div class="search-bar" data-v-68e678c9>
+      <span class="local-search-icon search-icon vp-icon DocSearch-Search-Icon" data-v-68e678c9></span>
+      <input class="search-input" data-v-68e678c9 type="text" placeholder="{{ $searchPlaceholder }}" data-search-input>
+      <div class="search-actions before" data-v-68e678c9>
+        <button type="button" data-search-close>Esc</button>
+      </div>
+    </div>
+    <div class="results" data-v-68e678c9 data-search-results></div>
   </div>
-</article>
+</div>
+
+<script>
+(() => {
+  const modal = document.querySelector('[data-search-modal]');
+  const input = document.querySelector('[data-search-input]');
+  const results = document.querySelector('[data-search-results]');
+  const openers = document.querySelectorAll('[data-search-open]');
+  const closers = document.querySelectorAll('[data-search-close]');
+  if (!modal || !input || !results || !openers.length) return;
+
+  const noResultsText = {{ $searchNoResults | jsonify | safeJS }};
+  const pages = {{- $pages := where .Site.RegularPages "Draft" "!=" true -}}
+    {{- $items := slice -}}
+    {{- range $pages -}}
+      {{- $items = $items | append (dict
+        "title" .Title
+        "url" .RelPermalink
+        "section" .Section
+        "summary" (or .Description (.Summary | plainify | truncate 120))
+      ) -}}
+    {{- end -}}
+    {{- $items | jsonify | safeJS -}};
+
+  const render = (q) => {
+    const keyword = q.trim().toLowerCase();
+    if (!keyword) {
+      results.innerHTML = '';
+      return;
+    }
+
+    const matched = pages.filter(p => (p.title || '').toLowerCase().includes(keyword) || (p.summary || '').toLowerCase().includes(keyword)).slice(0, 30);
+
+    if (!matched.length) {
+      results.innerHTML = `<div class="no-results" data-v-68e678c9>${noResultsText}</div>`;
+      return;
+    }
+
+    results.innerHTML = matched.map(p => `
+      <a class="result" data-v-68e678c9 href="${p.url}">
+        <div data-v-68e678c9>
+          <div class="titles" data-v-68e678c9>
+            <span class="title main" data-v-68e678c9>${p.title || 'Untitled'}</span>
+          </div>
+          <div class="excerpt" data-v-68e678c9>${p.summary || ''}</div>
+        </div>
+      </a>
+    `).join('');
+  };
+
+  const open = () => {
+    modal.hidden = false;
+    input.value = '';
+    results.innerHTML = '';
+    setTimeout(() => input.focus(), 0);
+  };
+  const close = () => { modal.hidden = true; };
+
+  openers.forEach(btn => btn.addEventListener('click', open));
+  closers.forEach(btn => btn.addEventListener('click', close));
+  input.addEventListener('input', () => render(input.value));
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      open();
+      return;
+    }
+    if (e.key === 'Escape' && !modal.hidden) close();
+  });
+})();
+</script>
 {{ end }}
+
+

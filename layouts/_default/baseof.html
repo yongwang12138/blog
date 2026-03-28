@@ -1,66 +1,72 @@
-<!doctype html>
-<html lang="{{ .Site.Language.Lang }}">
+﻿<!doctype html>
+<html lang="zh-CN" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-  <link rel="icon" href="/brand.svg">
-  <link rel="stylesheet" href="/site.css">
-</head>
-<body class="{{ if .IsHome }}is-home{{ else }}is-page{{ end }}">
+  <link rel="icon" href="/brand.svg?v=4">
+  <link rel="stylesheet" href="/home.css?v=1">
   {{ if not .IsHome }}
-  <header class="site-nav">
-    <div class="nav-inner">
-      <a class="brand" href="/">
-        <img src="/brand.svg" alt="logo">
-        <span>{{ .Site.Title }}</span>
-      </a>
-      <nav>
-        {{ range .Site.Menus.home }}
-          <a href="{{ .URL | default .PageRef }}">{{ .Name }}</a>
-        {{ end }}
-      </nav>
-      <button class="theme-toggle" type="button" aria-label="Theme" role="switch" aria-checked="false" data-theme-toggle>
-        <span class="toggle-thumb"></span>
-      </button>
-    </div>
-  </header>
+  <link rel="stylesheet" href="/doc.css?v=11">
   {{ end }}
-
-  <main>
-    {{ block "main" . }}{{ end }}
-  </main>
-
-  <footer class="site-footer">
-    <small>{{ .Site.Title }} - {{ .Site.Copyright }}</small>
-  </footer>
+  <script id="check-dark-mode">
+    (() => {
+      const e = localStorage.getItem('vitepress-theme-appearance') || 'auto';
+      const a = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if ((!e || e === 'auto') ? a : e === 'dark') document.documentElement.classList.add('dark');
+    })();
+  </script>
+</head>
+<body class="{{ if .IsHome }}is-home{{ else }}is-doc{{ end }}">
+  <div id="app">
+    <div class="Layout" data-v-d8b57b2d>
+      {{ block "main" . }}{{ end }}
+      <footer class="VPFooter" data-v-d8b57b2d data-v-566314d4>
+        <div class="container" data-v-566314d4>
+          <p class="copyright" data-v-566314d4>Copyright © 2025 {{ .Site.Title }}</p>
+        </div>
+      </footer>
+    </div>
+  </div>
 
   <script>
   (() => {
+    const KEY = 'vitepress-theme-appearance';
     const applyTheme = (theme) => {
       const dark = theme === 'dark';
-      document.documentElement.classList.toggle('dark-mode', dark);
+      document.documentElement.classList.toggle('dark', dark);
       document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
         btn.setAttribute('aria-checked', dark ? 'true' : 'false');
       });
     };
 
-    const stored = localStorage.getItem('theme-preference');
-    if (stored === 'light' || stored === 'dark') {
-      applyTheme(stored);
+    const current = localStorage.getItem(KEY);
+    if (current === 'light' || current === 'dark') {
+      applyTheme(current);
     } else {
       applyTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     }
 
-    document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const next = document.documentElement.classList.contains('dark-mode') ? 'light' : 'dark';
-        localStorage.setItem('theme-preference', next);
-        applyTheme(next);
-      });
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-theme-toggle]');
+      if (!btn) return;
+      const next = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+      localStorage.setItem(KEY, next);
+      applyTheme(next);
     });
   })();
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+

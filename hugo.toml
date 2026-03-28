@@ -1,123 +1,124 @@
+# 站点线上地址（部署后改成你自己的域名）
 baseURL = 'https://example.com/'
+
+# 博客标题（显示在浏览器标题和导航左上角）
 title = 'Mars星球'
+
+# 站点语言（影响 HTML lang 等）
 languageCode = 'zh-cn'
+
+# 默认内容语言（保留中文站点标识，避免回退为 EN）
 defaultContentLanguage = 'zh-cn'
+
+# 中文内容优化：让 Hugo 更好处理中文分词/摘要
 hasCJKLanguage = true
+
+# 时区（影响文章日期显示）
 timeZone = 'Asia/Shanghai'
+
+# 是否生成 robots.txt（建议保留）
 enableRobotsTXT = true
-enableGitInfo = false
-disablePathToLower = true
+
+# 自动摘要长度（影响 .Summary）
 summaryLength = 120
-paginate = 10
-copyright = 'CC BY-NC-SA 4.0'
-disqusShortname = ''
 
-[sitemap]
-  changefreq = 'weekly'
-  priority = 0.5
-  filename = 'sitemap.xml'
-
+# 文章永久链接格式
 [permalinks]
-  posts = '/posts/:year/:month/:slug/'
+  posts = '/tutorial/:slug.html'
 
-[taxonomies]
-  tag = 'tags'
-  category = 'categories'
-  series = 'series'
-
-[outputs]
-  home = ['HTML', 'RSS']
-  section = ['HTML', 'RSS']
-  taxonomy = ['HTML', 'RSS']
-  term = ['HTML', 'RSS']
-
-[privacy]
-  [privacy.youtube]
-    privacyEnhanced = true
-  [privacy.x]
-    enableDNT = true
-  [privacy.vimeo]
-    enableDNT = true
-
-[services]
-  [services.googleAnalytics]
-    id = ''
-
+# Markdown 渲染配置
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
+      # 允许 Markdown 中使用原生 HTML
       unsafe = true
-  [markup.tableOfContents]
-    startLevel = 1
-    endLevel = 3
-    ordered = false
-  [markup.highlight]
-    style = 'github'
-    lineNos = true
-    lineNumbersInTable = false
-    codeFences = true
-  [markup.parser]
-    [markup.parser.attribute]
-      block = true
-      title = true
-
-[languages]
-  [languages.zh-cn]
-    languageName = 'Simplified Chinese'
-    languageCode = 'zh-CN'
-    weight = 1
-    contentDir = 'content'
-    [languages.zh-cn.params]
-      description = 'Tech notes, reading, and life logs.'
 
 [menu]
+  # 顶部主导航：显示在首页右上角
   [[menu.home]]
-    name = 'Docs'
-    pageRef = '/docs/'
+    # 首页入口
+    name = '主页'
+    pageRef = '/'
     weight = 10
+
   [[menu.home]]
-    name = 'Posts'
+    # 示例页入口
+    name = '示例'
     pageRef = '/posts/'
     weight = 20
+
   [[menu.home]]
-    name = 'About'
-    pageRef = '/about/'
+    # Linux 文档入口
+    name = 'Linux'
+    pageRef = '/docs/'
     weight = 30
 
-  [[menu.after]]
-    name = 'GitHub'
-    url = 'https://github.com/'
-    weight = 10
-  [[menu.after]]
-    name = 'RSS'
-    url = '/index.xml'
-    weight = 20
+  [[menu.home]]
+    # 教程入口
+    name = '教程'
+    pageRef = '/docs/'
+    weight = 40
 
 [params]
-  author = 'Your Name'
-  description = 'A blog powered by Hugo and Hugo Book theme.'
-  keywords = ['blog', 'hugo', 'book-theme', 'tech']
+  # 站点描述（用于 meta description）
+  description = 'Tech notes, reading, and life logs.'
 
-  # Hugo Book main params
-  BookTheme = 'auto'
-  BookToC = true
-  BookLogo = 'logo.svg'
-  BookFavicon = 'favicon.svg'
-  BookSection = 'docs'
-  BookRepo = 'https://github.com/yongwang12138'
-  BookLastChangeLink = '{{ .Site.Params.BookRepo }}/commit/{{ .GitInfo.Hash }}'
-  BookEditLink = '{{ .Site.Params.BookRepo }}/edit/main/content/{{ .Path }}'
-  BookDateFormat = '2006-01-02 15:04'
-  BookSearch = true
-  BookComments = true
-  BookPortableLinks = 'warning'
-  BookServiceWorker = false
-  BookTranslatedOnly = false
+  [params.docLayout]
+    # 文档页最外层左右布局（只控制文章页）
+    # 左侧宽度：支持 px/%/fr，例如 '390px'、'26%'、'320px'
+    leftColumn = '20%'
+    # 右侧宽度：通常保持 '1fr'，也可写成 '74%' 等
+    rightColumn = '1fr'
+    # 左侧栏内容对齐
+    leftContentInset = '30%'
 
-  # Optional Giscus comments (used when disqusShortname is empty)
-  [params.giscus]
-    repo = ''
-    repoId = ''
-    category = 'General'
-    categoryId = ''
-    mapping = 'pathname'
+  [params.home]
+    # 品牌区：logo、GitHub 链接
+    # 左上角文字默认使用上方 title，不再重复配置
+    logo = '/brand.svg?v=4'
+    socialGithub = 'https://github.com/yongwang12138'
+    githubButtonText = 'View on GitHub'
+    tutorialMenuTitle = '教程'
+    tutorialCategory = '教程'
+
+    # Hero 区：主标题、副标题、描述和右侧插图
+    # heroName 留空时默认使用 title（当前未配置，直接复用 title）
+    heroText = '一个 VitePress 博客'
+    heroTagline = '将有一天你会拥有美好的一切'
+    heroImage = '/background.svg'
+
+    # 搜索区文案
+    searchButtonText = '搜索文档'
+    searchPlaceholder = '输入关键词'
+    searchNoResults = '无法找到相关结果'
+
+    # 首页按钮组（按顺序渲染）
+    # theme: brand(蓝色) / alt(灰色)
+    # external: true 时新窗口打开
+    [[params.home.actions]]
+      text = 'Markdown 示例'
+      link = '/posts/'
+      theme = 'brand'
+      external = false
+
+    [[params.home.actions]]
+      text = 'API 示例'
+      link = '/docs/'
+      theme = 'alt'
+      external = false
+
+    # 首页特性卡片（按顺序渲染）
+    [[params.home.features]]
+      icon = '📝'
+      title = '专注内容'
+      details = '只需 Markdown 即可轻松创建美观的文档站点。'
+
+    [[params.home.features]]
+      icon = '🛠️'
+      title = '特性 B'
+      details = '特性 B 的详细描述'
+
+    [[params.home.features]]
+      icon = '🚀'
+      title = '特性 C'
+      details = '特性 C 的详细描述'

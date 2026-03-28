@@ -1,0 +1,66 @@
+{{- $p := .Page -}}
+{{- $home := $p.Site.Params.home -}}
+{{- $searchButtonText := or $home.searchButtonText "搜索文档" -}}
+{{- $socialGithub := or $home.socialGithub "https://github.com/" -}}
+{{- $tutorialMenuTitle := or $home.tutorialMenuTitle "教程" -}}
+{{- $tutorialCategory := or $home.tutorialCategory "教程" -}}
+{{- $allPosts := where $p.Site.RegularPages "Section" "posts" -}}
+{{- $tutorialPages := where $allPosts "Params.categories" "intersect" (slice $tutorialCategory) -}}
+{{- $navAriaId := or .NavAriaId "main-nav-aria-label" -}}
+
+<div class="content-body" data-v-9fd4d1dd>
+  <div class="VPNavBarSearch search" data-v-9fd4d1dd>
+    <div id="local-search">
+      <button type="button" class="DocSearch DocSearch-Button" aria-label="{{ $searchButtonText }}" data-search-open>
+        <span class="DocSearch-Button-Container">
+          <span class="vp-icon DocSearch-Search-Icon"></span>
+          <span class="DocSearch-Button-Placeholder">{{ $searchButtonText }}</span>
+        </span>
+        <span class="DocSearch-Button-Keys">
+          <kbd class="DocSearch-Button-Key">Ctrl</kbd>
+          <kbd class="DocSearch-Button-Key">K</kbd>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <nav aria-labelledby="{{ $navAriaId }}" class="VPNavBarMenu menu" data-v-9fd4d1dd data-v-afb2845e>
+    <span id="{{ $navAriaId }}" class="visually-hidden" data-v-afb2845e>Main Navigation</span>
+    {{- range $p.Site.Menus.home }}
+      {{- $url := .URL | default .PageRef -}}
+      {{- if eq .Name $tutorialMenuTitle -}}
+      <div class="VPFlyout VPNavBarMenuGroup" data-v-afb2845e data-v-bfe7971f>
+        <button type="button" class="button" aria-haspopup="true" aria-expanded="false" data-v-bfe7971f>
+          <span class="text" data-v-bfe7971f><span data-v-bfe7971f>{{ .Name }}</span><span class="vpi-chevron-down text-icon" data-v-bfe7971f></span></span>
+        </button>
+        <div class="menu" data-v-bfe7971f>
+          <div class="VPMenu" data-v-bfe7971f data-v-20ed86d6>
+            <div class="items" data-v-20ed86d6>
+              {{- range sort $tutorialPages "Title" "asc" }}
+              <div class="VPMenuLink" data-v-20ed86d6 data-v-7eeeb2dc>
+                <a class="VPLink link{{ if eq .RelPermalink $p.RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}" data-v-7eeeb2dc><span data-v-7eeeb2dc>{{ .Title }}</span></a>
+              </div>
+              {{- end }}
+            </div>
+          </div>
+        </div>
+      </div>
+      {{- else -}}
+      {{- $isActive := and $p.IsHome (eq $url "/") -}}
+      <a class="VPLink link VPNavBarMenuLink{{ if $isActive }} active{{ end }}" href="{{ $url }}" tabindex="0" data-v-afb2845e data-v-815115f5><span data-v-815115f5>{{ .Name }}</span></a>
+      {{- end }}
+    {{- end }}
+  </nav>
+
+  <div class="VPNavBarAppearance appearance" data-v-9fd4d1dd data-v-3f90c1a5>
+    <button class="VPSwitch VPSwitchAppearance" type="button" role="switch" aria-checked="false" data-theme-toggle data-v-3f90c1a5 data-v-be9742d9 data-v-b4ccac88>
+      <span class="check" data-v-b4ccac88><span class="icon" data-v-b4ccac88><span class="vpi-sun sun" data-v-be9742d9></span><span class="vpi-moon moon" data-v-be9742d9></span></span></span>
+    </button>
+  </div>
+
+  {{ with $socialGithub }}
+  <div class="VPSocialLinks VPNavBarSocialLinks social-links" data-v-9fd4d1dd data-v-ef6192dc data-v-e71e869c>
+    <a class="VPSocialLink no-icon" href="{{ . }}" aria-label="github" target="_blank" rel="noopener" data-v-e71e869c data-v-60a9a2d3><span class="vpi-social-github"></span></a>
+  </div>
+  {{ end }}
+</div>
