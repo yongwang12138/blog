@@ -210,6 +210,28 @@ body.is-doc {
 .doc-top-vp {
   max-width: var(--doc-inner-max);
   margin: 0 auto;
+  position: relative;
+  z-index: 50;
+}
+
+.doc-top-vp .VPFlyout {
+  position: relative;
+}
+
+.doc-top-vp .VPFlyout .menu {
+  z-index: 120;
+}
+
+.doc-top-vp .VPFlyout:focus-within .menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.doc-content-wrap {
+  position: relative;
+  z-index: 1;
 }
 
 .doc-content-wrap {

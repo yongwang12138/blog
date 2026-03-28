@@ -3,7 +3,7 @@ date = '2026-03-19T18:00:00+08:00'
 draft = false
 title = 'C++ 仅头文件库推荐'
 tags = ['c++', 'library', 'header-only']
-categories = ['开发工具']
+categories = ['教程']
 +++
 
 # C++ 仅头文件库整理
