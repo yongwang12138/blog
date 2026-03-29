@@ -1,0 +1,23 @@
+{{- $rawType := or (.Get "type") (.Get 0) "info" -}}
+{{- $type := lower $rawType -}}
+{{- $title := .Get "title" -}}
+{{- if not $title -}}
+  {{- if eq $type "tip" -}}
+    {{- $title = "TIP" -}}
+  {{- else if or (eq $type "warning") (eq $type "warn") -}}
+    {{- $title = "WARNING" -}}
+  {{- else if eq $type "danger" -}}
+    {{- $title = "DANGER" -}}
+  {{- else if eq $type "note" -}}
+    {{- $title = "NOTE" -}}
+  {{- else -}}
+    {{- $title = "INFO" -}}
+  {{- end -}}
+{{- end -}}
+
+<div class="notice notice-{{ $type }}">
+  <p class="notice-title">{{ $title }}</p>
+  <div class="notice-content">
+    {{- .Inner | markdownify -}}
+  </div>
+</div>

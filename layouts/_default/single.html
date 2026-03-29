@@ -11,10 +11,12 @@
 {{- $leftColumn := or $docLayout.leftColumn "390px" -}}
 {{- $rightColumn := or $docLayout.rightColumn "1fr" -}}
 {{- $leftContentInset := or $docLayout.leftContentInset "32px" -}}
+{{- $mainColumn := or $docLayout.mainColumn "1fr" -}}
+{{- $tocColumn := or $docLayout.tocColumn "268px" -}}
 {{- $searchPlaceholder := or $home.searchPlaceholder "输入关键词" -}}
 {{- $searchNoResults := or $home.searchNoResults "无法找到相关结果" -}}
 
-<div class="doc-layout" style="--doc-left-width: {{ $leftColumn }}; --doc-right-width: {{ $rightColumn }}; --doc-left-pad: {{ $leftContentInset }};">
+<div class="doc-layout" style="--doc-left-width: {{ $leftColumn }}; --doc-right-width: {{ $rightColumn }}; --doc-left-pad: {{ $leftContentInset }}; --doc-main-col: {{ $mainColumn }}; --doc-toc-col: {{ $tocColumn }};">
   <aside class="doc-left">
     <div class="doc-left-top">
       <a class="doc-brand" href="{{ "" | relURL }}">

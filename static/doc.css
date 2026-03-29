@@ -245,16 +245,19 @@ body.is-doc {
 
 .doc-content-wrap {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--doc-toc-width);
+  grid-template-columns: var(--doc-main-col, minmax(0, 1fr)) var(--doc-toc-col, var(--doc-toc-width));
   gap: var(--doc-right-gap);
   padding: 22px 32px;
-  max-width: var(--doc-inner-max);
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
+  width: 100%;
 }
 
 .doc-main {
   min-width: 0;
   max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .doc-toc {
@@ -354,6 +357,62 @@ body.is-doc {
 
 .vp-doc blockquote p {
   margin: 0;
+}
+
+.vp-doc .notice {
+  margin: 16px 0;
+  border-radius: 12px;
+  border: 1px solid #d8defb;
+  background: #eef2ff;
+  padding: 12px 14px;
+}
+
+.vp-doc .notice .notice-title {
+  margin: 0 0 8px;
+  font-size: 13px;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #334bb6;
+}
+
+.vp-doc .notice .notice-content > :first-child {
+  margin-top: 0;
+}
+
+.vp-doc .notice .notice-content > :last-child {
+  margin-bottom: 0;
+}
+
+.vp-doc .notice.notice-warning,
+.vp-doc .notice.notice-warn {
+  border-color: #f8df9f;
+  background: #fff7e6;
+}
+
+.vp-doc .notice.notice-warning .notice-title,
+.vp-doc .notice.notice-warn .notice-title {
+  color: #a46507;
+}
+
+.vp-doc .notice.notice-danger {
+  border-color: #f6c3cb;
+  background: #fff0f3;
+}
+
+.vp-doc .notice.notice-danger .notice-title {
+  color: #b42338;
+}
+
+.vp-doc .notice.notice-note,
+.vp-doc .notice.notice-info {
+  border-color: #d6deea;
+  background: #f3f6fb;
+}
+
+.vp-doc .notice.notice-note .notice-title,
+.vp-doc .notice.notice-info .notice-title {
+  color: #42536f;
 }
 
 @media (max-width: 1279px) {

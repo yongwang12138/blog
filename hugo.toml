@@ -71,6 +71,14 @@ summaryLength = 120
     # 左侧栏内容横向内边距
     leftContentInset = '30%'
 
+    # 文档正文区（中间列）宽度
+    # 示例：'1fr'、'2fr'、'70%'、'minmax(0, 1fr)'
+    mainColumn = '1fr'
+
+    # 右侧目录列宽度
+    # 示例：'268px'、'22%'、'minmax(220px, 26%)'
+    tocColumn = '30%'
+
   [params.home]
     # 品牌区：logo、GitHub 链接
     logo = 'brand.svg'
