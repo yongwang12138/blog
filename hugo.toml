@@ -41,10 +41,10 @@ summaryLength = 120
     pageRef = '/'
     weight = 10
 
-  # 顶部导航：示例
+  # 顶部导航：示例（直达写作样式速查）
   [[menu.home]]
     name = '示例'
-    pageRef = '/posts/'
+    pageRef = '/docs/writing-style-cheatsheet/'
     weight = 20
 
   # 顶部导航：Linux
@@ -69,7 +69,7 @@ summaryLength = 120
     rightColumn = '1fr'
 
     # 左侧栏内容横向内边距
-    leftContentInset = '32px'
+    leftContentInset = '30%'
 
   [params.home]
     # 品牌区：logo、GitHub 链接

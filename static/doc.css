@@ -36,6 +36,12 @@ body.is-doc {
 }
 
 .doc-left {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background: var(--doc-bg-left);
   border-right: 1px solid var(--doc-line);
 }
@@ -72,6 +78,9 @@ body.is-doc {
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
   padding: 20px var(--doc-left-pad, 32px) 28px;
 }
 
@@ -269,6 +278,15 @@ body.is-doc {
   list-style: none;
 }
 
+.doc-toc-content #TableOfContents ul ul {
+  padding-left: 16px;
+  margin-top: 4px;
+}
+
+.doc-toc-content #TableOfContents ul ul ul {
+  padding-left: 14px;
+}
+
 .doc-toc-content #TableOfContents li {
   margin: 8px 0;
 }
@@ -277,6 +295,7 @@ body.is-doc {
   color: var(--doc-text-2);
   text-decoration: none;
   font-size: 14px;
+  line-height: 1.45;
 }
 
 .doc-toc-content #TableOfContents a:hover {
