@@ -1,6 +1,6 @@
-﻿{{ define "main" }}
+{{ define "main" }}
 {{- $home := .Site.Params.home -}}
-{{- $logo := or $home.logo "/brand.svg?v=4" -}}
+{{- $logo := or $home.logo "/brand.svg" -}}
 {{- $heroName := or $home.heroName .Site.Title -}}
 {{- $heroText := or $home.heroText "一个 VitePress 博客" -}}
 {{- $heroTagline := or $home.heroTagline "将有一天你会拥有美好的一切" -}}
@@ -36,8 +36,8 @@
       <div class="container" data-v-9fd4d1dd>
         <div class="title" data-v-9fd4d1dd>
           <div class="VPNavBarTitle" data-v-9fd4d1dd data-v-9f43907a>
-            <a class="title" href="/" data-v-9f43907a>
-              <img class="VPImage logo" src="{{ $logo }}" alt="{{ .Site.Title }}" data-v-ab19afbb>
+            <a class="title" href="{{ "" | relURL }}" data-v-9f43907a>
+              <img class="VPImage logo" src="{{ $logo | relURL }}" alt="{{ .Site.Title }}" data-v-ab19afbb>
               <span data-v-9f43907a>{{ .Site.Title }}</span>
             </a>
           </div>
@@ -63,7 +63,11 @@
             {{- range $actions }}
               {{- $theme := or .theme "brand" -}}
               {{- $external := .external -}}
-              <div class="action" data-v-dd8814ff><a class="VPButton medium {{ $theme }}" href="{{ .link }}"{{ if $external }} target="_blank" rel="noreferrer"{{ end }} data-v-dd8814ff data-v-93dc4167>{{ .text }}</a></div>
+              {{- $actionLink := .link -}}
+              {{- if not $external -}}
+                {{- $actionLink = $actionLink | relURL -}}
+              {{- end -}}
+              <div class="action" data-v-dd8814ff><a class="VPButton medium {{ $theme }}" href="{{ $actionLink }}"{{ if $external }} target="_blank" rel="noreferrer"{{ end }} data-v-dd8814ff data-v-93dc4167>{{ .text }}</a></div>
             {{- end }}
             {{- with $socialGithub }}
             <div class="action" data-v-dd8814ff><a class="VPButton medium brand" href="{{ . }}" target="_blank" rel="noreferrer" data-v-dd8814ff data-v-93dc4167>{{ $githubButtonText }}</a></div>
@@ -73,7 +77,7 @@
         <div class="image" data-v-dd8814ff>
           <div class="image-container" data-v-dd8814ff>
             <div class="image-bg" data-v-dd8814ff></div>
-            <img class="VPImage image-src" src="{{ $heroImage }}" alt="背景图" data-v-ab19afbb>
+            <img class="VPImage image-src" src="{{ $heroImage | relURL }}" alt="背景图" data-v-ab19afbb>
           </div>
         </div>
       </div>

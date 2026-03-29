@@ -1,4 +1,4 @@
-{{- $p := .Page -}}
+﻿{{- $p := .Page -}}
 {{- $home := $p.Site.Params.home -}}
 {{- $searchButtonText := or $home.searchButtonText "搜索文档" -}}
 {{- $socialGithub := or $home.socialGithub "https://github.com/" -}}
@@ -28,6 +28,10 @@
     <span id="{{ $navAriaId }}" class="visually-hidden" data-v-afb2845e>Main Navigation</span>
     {{- range $p.Site.Menus.home }}
       {{- $url := .URL | default .PageRef -}}
+      {{- $navLink := $url -}}
+      {{- if not (or (hasPrefix $url "http://") (hasPrefix $url "https://") (hasPrefix $url "#")) -}}
+        {{- $navLink = (replaceRE "^/" "" $url) | relURL -}}
+      {{- end -}}
       {{- if eq .Name $tutorialMenuTitle -}}
       <div class="VPFlyout VPNavBarMenuGroup" data-v-afb2845e data-v-bfe7971f>
         <button type="button" class="button" aria-haspopup="true" aria-expanded="false" data-v-bfe7971f>
@@ -38,7 +42,7 @@
             <div class="items" data-v-20ed86d6>
               {{- range sort $tutorialPages "Title" "asc" }}
               <div class="VPMenuLink" data-v-20ed86d6 data-v-7eeeb2dc>
-                <a class="VPLink link{{ if eq .RelPermalink $p.RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}" data-v-7eeeb2dc><span data-v-7eeeb2dc>{{ .Title }}</span></a>
+                <a class="VPLink link{{ if eq .RelPermalink $p.RelPermalink }} active{{ end }}" href="{{ .RelPermalink | relURL }}" data-v-7eeeb2dc><span data-v-7eeeb2dc>{{ .Title }}</span></a>
               </div>
               {{- end }}
             </div>
@@ -47,7 +51,7 @@
       </div>
       {{- else -}}
       {{- $isActive := and $p.IsHome (eq $url "/") -}}
-      <a class="VPLink link VPNavBarMenuLink{{ if $isActive }} active{{ end }}" href="{{ $url }}" tabindex="0" data-v-afb2845e data-v-815115f5><span data-v-815115f5>{{ .Name }}</span></a>
+      <a class="VPLink link VPNavBarMenuLink{{ if $isActive }} active{{ end }}" href="{{ $navLink }}" tabindex="0" data-v-afb2845e data-v-815115f5><span data-v-815115f5>{{ .Name }}</span></a>
       {{- end }}
     {{- end }}
   </nav>

@@ -1,7 +1,7 @@
-# 站点线上地址（你的仓库是 yongwang12138/blog）
+# 站点线上地址（GitHub Pages 项目页）
 baseURL = 'https://yongwang12138.github.io/blog/'
 
-# 博客标题（显示在浏览器标题和导航左上角）
+# 博客标题（显示在浏览器标题与导航左上角）
 title = 'Mars星球'
 
 # 站点语言（影响 html lang）
@@ -10,7 +10,7 @@ languageCode = 'zh-cn'
 # 默认内容语言
 defaultContentLanguage = 'zh-cn'
 
-# 中文内容优化（摘要/分词）
+# 中文内容优化（摘要/字数统计）
 hasCJKLanguage = true
 
 # 时区（影响日期显示）
@@ -22,34 +22,38 @@ enableRobotsTXT = true
 # 自动摘要长度
 summaryLength = 120
 
-# 文章永久链接：/tutorial/xxx.html
+# 文章永久链接格式
 [permalinks]
+  # 最终形如 /tutorial/git.html
   posts = '/tutorial/:slug.html'
 
 # Markdown 渲染配置
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
-      # 允许 Markdown 中使用原生 HTML
+      # 允许在 Markdown 中使用原生 HTML
       unsafe = true
 
 [menu]
-  # 顶部主导航
+  # 顶部导航：主页
   [[menu.home]]
     name = '主页'
     pageRef = '/'
     weight = 10
 
+  # 顶部导航：示例
   [[menu.home]]
     name = '示例'
     pageRef = '/posts/'
     weight = 20
 
+  # 顶部导航：Linux
   [[menu.home]]
     name = 'Linux'
     pageRef = '/docs/'
     weight = 30
 
+  # 顶部导航：教程（带下拉）
   [[menu.home]]
     name = '教程'
     pageRef = '/docs/'
@@ -64,25 +68,25 @@ summaryLength = 120
     leftColumn = '20%'
     rightColumn = '1fr'
 
-    # 左侧栏内部横向边距（可写 px/%/rem）
-    leftContentInset = '30%'
+    # 左侧栏内容横向内边距
+    leftContentInset = '32px'
 
   [params.home]
-    # 品牌区配置
-    logo = '/brand.svg?v=4'
+    # 品牌区：logo、GitHub 链接
+    logo = 'brand.svg'
     socialGithub = 'https://github.com/yongwang12138'
     githubButtonText = 'View on GitHub'
 
-    # 教程菜单分组名称（用于下拉和左侧列表筛选）
+    # 教程菜单标题与教程分类名（用于下拉与左侧列表筛选）
     tutorialMenuTitle = '教程'
     tutorialCategory = '教程'
 
-    # 首页 Hero 文案
+    # 首页 Hero 区文案与图片
     heroText = '一个 VitePress 博客'
     heroTagline = '将有一天你会拥有美好的一切'
-    heroImage = '/background.svg'
+    heroImage = 'background.svg'
 
-    # 搜索文案
+    # 搜索框文案
     searchButtonText = '搜索文档'
     searchPlaceholder = '输入关键词'
     searchNoResults = '无法找到相关结果'
@@ -90,13 +94,13 @@ summaryLength = 120
     # 首页按钮组
     [[params.home.actions]]
       text = 'Markdown 示例'
-      link = '/posts/'
+      link = 'posts/'
       theme = 'brand'
       external = false
 
     [[params.home.actions]]
       text = 'API 示例'
-      link = '/docs/'
+      link = 'docs/'
       theme = 'alt'
       external = false
 

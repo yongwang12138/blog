@@ -1,6 +1,6 @@
 ﻿{{ define "main" }}
 {{- $home := .Site.Params.home -}}
-{{- $logo := or $home.logo "/brand.svg?v=4" -}}
+{{- $logo := or $home.logo "/brand.svg" -}}
 {{- $searchButtonText := or $home.searchButtonText "搜索文档" -}}
 {{- $socialGithub := or $home.socialGithub "https://github.com/" -}}
 {{- $tutorialMenuTitle := or $home.tutorialMenuTitle "教程" -}}
@@ -17,8 +17,8 @@
 <div class="doc-layout" style="--doc-left-width: {{ $leftColumn }}; --doc-right-width: {{ $rightColumn }}; --doc-left-pad: {{ $leftContentInset }};">
   <aside class="doc-left">
     <div class="doc-left-top">
-      <a class="doc-brand" href="/">
-        <img class="doc-brand-logo" src="{{ $logo }}" alt="{{ .Site.Title }}">
+      <a class="doc-brand" href="{{ "" | relURL }}">
+        <img class="doc-brand-logo" src="{{ $logo | relURL }}" alt="{{ .Site.Title }}">
         <span class="doc-brand-text">{{ .Site.Title }}</span>
       </a>
     </div>
