@@ -1,28 +1,28 @@
-# 站点线上地址（部署后改成你自己的域名）
-baseURL = 'https://example.com/'
+# 站点线上地址（你的仓库是 yongwang12138/blog）
+baseURL = 'https://yongwang12138.github.io/blog/'
 
 # 博客标题（显示在浏览器标题和导航左上角）
 title = 'Mars星球'
 
-# 站点语言（影响 HTML lang 等）
+# 站点语言（影响 html lang）
 languageCode = 'zh-cn'
 
-# 默认内容语言（保留中文站点标识，避免回退为 EN）
+# 默认内容语言
 defaultContentLanguage = 'zh-cn'
 
-# 中文内容优化：让 Hugo 更好处理中文分词/摘要
+# 中文内容优化（摘要/分词）
 hasCJKLanguage = true
 
-# 时区（影响文章日期显示）
+# 时区（影响日期显示）
 timeZone = 'Asia/Shanghai'
 
-# 是否生成 robots.txt（建议保留）
+# 生成 robots.txt
 enableRobotsTXT = true
 
-# 自动摘要长度（影响 .Summary）
+# 自动摘要长度
 summaryLength = 120
 
-# 文章永久链接格式
+# 文章永久链接：/tutorial/xxx.html
 [permalinks]
   posts = '/tutorial/:slug.html'
 
@@ -34,67 +34,60 @@ summaryLength = 120
       unsafe = true
 
 [menu]
-  # 顶部主导航：显示在首页右上角
+  # 顶部主导航
   [[menu.home]]
-    # 首页入口
     name = '主页'
     pageRef = '/'
     weight = 10
 
   [[menu.home]]
-    # 示例页入口
     name = '示例'
     pageRef = '/posts/'
     weight = 20
 
   [[menu.home]]
-    # Linux 文档入口
     name = 'Linux'
     pageRef = '/docs/'
     weight = 30
 
   [[menu.home]]
-    # 教程入口
     name = '教程'
     pageRef = '/docs/'
     weight = 40
 
 [params]
-  # 站点描述（用于 meta description）
+  # 站点描述（meta description）
   description = 'Tech notes, reading, and life logs.'
 
   [params.docLayout]
-    # 文档页最外层左右布局（只控制文章页）
-    # 左侧宽度：支持 px/%/fr，例如 '390px'、'26%'、'320px'
+    # 文档页最外层左右布局比例
     leftColumn = '20%'
-    # 右侧宽度：通常保持 '1fr'，也可写成 '74%' 等
     rightColumn = '1fr'
-    # 左侧栏内容对齐
+
+    # 左侧栏内部横向边距（可写 px/%/rem）
     leftContentInset = '30%'
 
   [params.home]
-    # 品牌区：logo、GitHub 链接
-    # 左上角文字默认使用上方 title，不再重复配置
+    # 品牌区配置
     logo = '/brand.svg?v=4'
     socialGithub = 'https://github.com/yongwang12138'
     githubButtonText = 'View on GitHub'
+
+    # 教程菜单分组名称（用于下拉和左侧列表筛选）
     tutorialMenuTitle = '教程'
     tutorialCategory = '教程'
 
-    # Hero 区：主标题、副标题、描述和右侧插图
-    # heroName 留空时默认使用 title（当前未配置，直接复用 title）
+    # 首页 Hero 文案
     heroText = '一个 VitePress 博客'
     heroTagline = '将有一天你会拥有美好的一切'
     heroImage = '/background.svg'
 
-    # 搜索区文案
+    # 搜索文案
     searchButtonText = '搜索文档'
     searchPlaceholder = '输入关键词'
     searchNoResults = '无法找到相关结果'
 
-    # 首页按钮组（按顺序渲染）
-    # theme: brand(蓝色) / alt(灰色)
-    # external: true 时新窗口打开
+    # 首页按钮组
     [[params.home.actions]]
       text = 'Markdown 示例'
       link = '/posts/'
@@ -107,11 +100,11 @@ summaryLength = 120
       theme = 'alt'
       external = false
 
-    # 首页特性卡片（按顺序渲染）
+    # 首页特性卡片
     [[params.home.features]]
       icon = '📝'
       title = '专注内容'
-      details = '只需 Markdown 即可轻松创建美观的文档站点。'
+      details = '只需 Markdown 即可轻松创建美观文档站点。'
 
     [[params.home.features]]
       icon = '🛠️'
