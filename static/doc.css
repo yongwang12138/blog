@@ -442,3 +442,105 @@ body.is-doc {
     padding: 20px 16px;
   }
 }
+
+/* Dark theme readability tune-up (aligned with VitePress contrast style) */
+html.dark .vp-doc p,
+html.dark .vp-doc li {
+  color: #a8b1c3;
+}
+
+html.dark .vp-doc h1,
+html.dark .vp-doc h2,
+html.dark .vp-doc h3,
+html.dark .vp-doc h4 {
+  color: #e2e8f0;
+}
+
+html.dark .vp-doc pre {
+  background: #111827;
+  border-color: #3b4255;
+}
+
+html.dark .vp-doc .highlight pre,
+html.dark .vp-doc .highlight code,
+html.dark .vp-doc pre code {
+  color: #c9d1d9 !important;
+}
+
+html.dark .vp-doc :not(pre) > code {
+  background: #2a3250;
+  color: #b7c5ff;
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+
+html.dark .vp-doc blockquote {
+  border-left-color: #6f87ff;
+  background: #2a2f4a;
+}
+
+html.dark .vp-doc blockquote p {
+  color: #d5ddf1;
+}
+
+html.dark .vp-doc .notice {
+  border-color: #6f87ff;
+  background: #2a2f4a;
+}
+
+html.dark .vp-doc .notice .notice-title {
+  color: #c8d3ff;
+}
+
+html.dark .vp-doc .notice .notice-content,
+html.dark .vp-doc .notice .notice-content p,
+html.dark .vp-doc .notice .notice-content li {
+  color: #d5ddf1;
+}
+
+html.dark .vp-doc .notice.notice-warning,
+html.dark .vp-doc .notice.notice-warn {
+  border-color: #7b5d2c;
+  background: #3a2f1b;
+}
+
+html.dark .vp-doc .notice.notice-warning .notice-title,
+html.dark .vp-doc .notice.notice-warn .notice-title {
+  color: #f8d487;
+}
+
+html.dark .vp-doc .notice.notice-danger {
+  border-color: #7f4251;
+  background: #3f2430;
+}
+
+html.dark .vp-doc .notice.notice-danger .notice-title {
+  color: #ffb8c8;
+}
+
+html.dark .vp-doc .notice.notice-note,
+html.dark .vp-doc .notice.notice-info {
+  border-color: #4c5e7b;
+  background: #1f2c3f;
+}
+
+html.dark .vp-doc .notice.notice-note .notice-title,
+html.dark .vp-doc .notice.notice-info .notice-title {
+  color: #b9d7ff;
+}
+
+html.dark .doc-side-title,
+html.dark .doc-toc h2 {
+  color: #e2e8f0;
+}
+
+html.dark .doc-side-link,
+html.dark .doc-toc-content #TableOfContents a {
+  color: #9aa4b6;
+}
+
+html.dark .doc-side-link.active,
+html.dark .doc-side-link:hover,
+html.dark .doc-toc-content #TableOfContents a:hover {
+  color: #8ea6ff;
+}

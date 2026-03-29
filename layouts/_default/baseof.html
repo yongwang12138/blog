@@ -12,9 +12,12 @@
   {{ end }}
   <script id="check-dark-mode">
     (() => {
-      const e = localStorage.getItem('vitepress-theme-appearance') || 'auto';
-      const a = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if ((!e || e === 'auto') ? a : e === 'dark') document.documentElement.classList.add('dark');
+      const KEY = 'mars-blog-theme-appearance';
+      const current = localStorage.getItem(KEY);
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (current === 'dark' || (current !== 'light' && systemDark)) {
+        document.documentElement.classList.add('dark');
+      }
     })();
   </script>
 </head>
@@ -32,7 +35,7 @@
 
   <script>
   (() => {
-    const KEY = 'vitepress-theme-appearance';
+    const KEY = 'mars-blog-theme-appearance';
     const applyTheme = (theme) => {
       const dark = theme === 'dark';
       document.documentElement.classList.toggle('dark', dark);
@@ -54,6 +57,12 @@
       const next = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
       localStorage.setItem(KEY, next);
       applyTheme(next);
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      const saved = localStorage.getItem(KEY);
+      if (saved === 'light' || saved === 'dark') return;
+      applyTheme(e.matches ? 'dark' : 'light');
     });
   })();
   </script>
