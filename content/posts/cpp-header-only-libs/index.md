@@ -1,12 +1,12 @@
 ﻿+++
 date = '2026-03-19T18:00:00+08:00'
 draft = false
-title = 'C++ 仅头文件库推荐'
+title = 'C++ 仅头文件库'
 tags = ['c++', 'library', 'header-only']
 categories = ['教程']
 +++
 
-# C++ 仅头文件库整理
+# C++ 仅头文件库
 
 这里记录一些实用的 C++ 仅头文件库，集成简单，适合快速上手。
 

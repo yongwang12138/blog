@@ -1,6 +1,7 @@
 ﻿+++
 title = "写作样式速查"
 description = "博客常用 Markdown 样式与可复制模板"
+categories = ["文档"]
 +++
 
 # 写作样式速查

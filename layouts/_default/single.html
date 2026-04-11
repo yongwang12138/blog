@@ -3,10 +3,18 @@
 {{- $logo := or $home.logo "/brand.svg" -}}
 {{- $searchButtonText := or $home.searchButtonText "搜索文档" -}}
 {{- $socialGithub := or $home.socialGithub "https://github.com/" -}}
-{{- $tutorialMenuTitle := or $home.tutorialMenuTitle "教程" -}}
-{{- $tutorialCategory := or $home.tutorialCategory "教程" -}}
-{{- $allPosts := where .Site.RegularPages "Section" "posts" -}}
-{{- $tutorialPages := where $allPosts "Params.categories" "intersect" (slice $tutorialCategory) -}}
+{{- $sectionPages := where .Site.RegularPages "Section" .Section -}}
+{{- $sideTitle := .Section | humanize -}}
+{{- $sidePages := $sectionPages -}}
+{{- $currentCategories := .Params.categories -}}
+{{- if and $currentCategories (gt (len $currentCategories) 0) -}}
+  {{- $primaryCategory := index $currentCategories 0 -}}
+  {{- $categoryPages := where $sectionPages "Params.categories" "intersect" (slice $primaryCategory) -}}
+  {{- if gt (len $categoryPages) 0 -}}
+    {{- $sideTitle = $primaryCategory -}}
+    {{- $sidePages = $categoryPages -}}
+  {{- end -}}
+{{- end -}}
 {{- $docLayout := .Site.Params.docLayout -}}
 {{- $leftColumn := or $docLayout.leftColumn "390px" -}}
 {{- $rightColumn := or $docLayout.rightColumn "1fr" -}}
@@ -26,9 +34,9 @@
     </div>
 
     <div class="doc-left-bottom">
-      <h2 class="doc-side-title">{{ $tutorialMenuTitle }}</h2>
+      <h2 class="doc-side-title">{{ $sideTitle }}</h2>
       <nav class="doc-side-nav">
-        {{- range sort $tutorialPages "Title" "asc" }}
+        {{- range sort $sidePages "Title" "asc" }}
         <a class="doc-side-link{{ if eq .RelPermalink $.RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}">{{ .Title }}</a>
         {{- end }}
       </nav>
