@@ -29,7 +29,10 @@
     {{- range $p.Site.Menus.home }}
       {{- $url := .URL | default .PageRef -}}
       {{- $navLink := $url -}}
+      {{- $menuName := .Name -}}
+
       {{- if eq .Name $tutorialMenuTitle -}}
+      {{/* 教程下拉菜单 */}}
       <div class="VPFlyout VPNavBarMenuGroup" data-v-afb2845e data-v-bfe7971f>
         <button type="button" class="button" aria-haspopup="true" aria-expanded="false" data-v-bfe7971f>
           <span class="text" data-v-bfe7971f><span data-v-bfe7971f>{{ .Name }}</span><span class="vpi-chevron-down text-icon" data-v-bfe7971f></span></span>
@@ -46,7 +49,35 @@
           </div>
         </div>
       </div>
+      {{- else if or (eq .Name "C++") (eq .Name "Git") (eq .Name "其他") -}}
+      {{/* C++、Git、其他分类的下拉菜单 */}}
+      {{- $section := "" -}}
+      {{- if eq .Name "C++" -}}
+        {{- $section = "cpp" -}}
+      {{- else if eq .Name "Git" -}}
+        {{- $section = "git" -}}
+      {{- else if eq .Name "其他" -}}
+        {{- $section = "other" -}}
+      {{- end -}}
+      {{- $sectionPages := where $p.Site.RegularPages "Section" $section -}}
+      <div class="VPFlyout VPNavBarMenuGroup" data-v-afb2845e data-v-bfe7971f>
+        <button type="button" class="button" aria-haspopup="true" aria-expanded="false" data-v-bfe7971f>
+          <span class="text" data-v-bfe7971f><span data-v-bfe7971f>{{ .Name }}</span><span class="vpi-chevron-down text-icon" data-v-bfe7971f></span></span>
+        </button>
+        <div class="menu" data-v-bfe7971f>
+          <div class="VPMenu" data-v-bfe7971f data-v-20ed86d6>
+            <div class="items" data-v-20ed86d6>
+              {{- range sort $sectionPages "Title" "asc" }}
+              <div class="VPMenuLink" data-v-20ed86d6 data-v-7eeeb2dc>
+                <a class="VPLink link{{ if eq .RelPermalink $p.RelPermalink }} active{{ end }}" href="{{ .RelPermalink }}" data-v-7eeeb2dc><span data-v-7eeeb2dc>{{ .Title }}</span></a>
+              </div>
+              {{- end }}
+            </div>
+          </div>
+        </div>
+      </div>
       {{- else -}}
+      {{/* 普通链接 */}}
       {{- $isActive := and $p.IsHome (eq $url "/") -}}
       <a class="VPLink link VPNavBarMenuLink{{ if $isActive }} active{{ end }}" href="{{ $navLink }}" tabindex="0" data-v-afb2845e data-v-815115f5><span data-v-815115f5>{{ .Name }}</span></a>
       {{- end }}

@@ -1,8 +1,7 @@
 +++
 date = '2026-03-09T20:31:36+08:00'
-draft = false
 title = 'Git基础教程'
-tags = ['git', '教程']
+slug = 'git-tutorial'
 categories = ['教程']
 +++
 

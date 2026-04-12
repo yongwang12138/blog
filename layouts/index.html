@@ -128,9 +128,8 @@
 
   const noResultsText = {{ $searchNoResults | jsonify | safeJS }};
 
-  const pages = {{- $pages := where .Site.RegularPages "Draft" "!=" true -}}
-    {{- $items := slice -}}
-    {{- range $pages -}}
+  const pages = {{- $items := slice -}}
+    {{- range .Site.RegularPages -}}
       {{- $items = $items | append (dict
         "title" .Title
         "url" .RelPermalink

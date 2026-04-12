@@ -24,8 +24,10 @@ summaryLength = 120
 
 # 文章永久链接格式
 [permalinks]
-  # 最终形如 /tutorial/git.html
-  posts = '/tutorial/:slug.html'
+  # 按分类组织：/分类名/文章slug.html
+  cpp = '/:section/:slug.html'
+  git = '/:section/:slug.html'
+  other = '/:section/:slug.html'
 
 # Markdown 渲染配置
 [markup]
@@ -41,22 +43,22 @@ summaryLength = 120
     pageRef = '/'
     weight = 10
 
-  # 顶部导航：文档
+  # 顶部导航：C++（直接链接到第一篇文章）
   [[menu.home]]
-    name = '文档'
-    pageRef = '/docs/writing-style-cheatsheet/'
+    name = 'C++'
+    pageRef = '/cpp/cpp-header-only-libs.html'
     weight = 20
 
-  # 顶部导航：Linux
+  # 顶部导航：Git（直接链接到第一篇文章）
   [[menu.home]]
-    name = 'Linux'
-    pageRef = '/docs/'
+    name = 'Git'
+    pageRef = '/git/git-tutorial.html'
     weight = 30
 
-  # 顶部导航：教程（带下拉）
+  # 顶部导航：其他（直接链接到第一篇文章）
   [[menu.home]]
-    name = '教程'
-    pageRef = '/docs/'
+    name = '其他'
+    pageRef = '/other/compare.html'
     weight = 40
 
 [params]
@@ -101,14 +103,14 @@ summaryLength = 120
 
     # 首页按钮组
     [[params.home.actions]]
-      text = 'Markdown 示例'
-      link = 'posts/'
+      text = 'C++ 文章'
+      link = '/cpp/cpp-header-only-libs.html'
       theme = 'brand'
       external = false
 
     [[params.home.actions]]
-      text = 'API 示例'
-      link = 'docs/'
+      text = 'Git 教程'
+      link = '/git/git-tutorial.html'
       theme = 'alt'
       external = false
 

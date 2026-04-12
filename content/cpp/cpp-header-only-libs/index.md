@@ -1,8 +1,7 @@
 ﻿+++
 date = '2026-03-19T18:00:00+08:00'
-draft = false
 title = 'C++ 仅头文件库'
-tags = ['c++', 'library', 'header-only']
+slug = 'cpp-header-only-libs'
 categories = ['教程']
 +++
 
