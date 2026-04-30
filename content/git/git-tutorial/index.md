@@ -7,7 +7,7 @@ categories = ['教程']
 
 # Git 从零到协作实用指南
 
-这篇文档按实际工作顺序整理：`初始化仓库 -> 连接远程仓库 -> 首次推送 -> 日常提交 -> 版本标签 -> 冲突处理`。
+这篇文档按实际工作顺序整理：`初始化仓库 -> 连接远程仓库 -> 首次推送 -> 修改远程地址 -> 日常提交 -> 版本标签 -> 冲突处理`。
 
 ## 1. 首次使用前的基础配置
 
@@ -145,9 +145,104 @@ git push -u origin main
 如果远程仓库里已经有初始化文件（如 README），首次推送前先执行 `git pull --rebase origin main`，避免被拒绝推送。
 {{< /notice >}}
 
-## 4. 日常开发最常用流程
+## 4. 修改远程仓库地址
 
-### 4.1 提交本地修改
+当你需要把项目从一个远程仓库迁移到另一个（例如：仓库地址变更、从个人仓库转移到组织仓库、切换 Git 服务器等），需要修改远程仓库地址。
+
+### 4.1 查看当前远程仓库
+
+在修改前，先确认当前的远程仓库配置：
+
+```bash
+git remote -v
+```
+
+输出示例：
+```
+origin  git@188.18.45.211:wangyongwang/screencontrol.git (fetch)
+origin  git@188.18.45.211:wangyongwang/screencontrol.git (push)
+```
+
+### 4.2 修改远程仓库地址
+
+使用 `git remote set-url` 命令修改远程地址：
+
+```bash
+git remote set-url origin git@188.18.45.211:xc-client/screencontrol.git
+```
+
+**命令格式：**
+```bash
+git remote set-url <远程名称> <新的仓库地址>
+```
+
+### 4.3 验证修改结果
+
+修改后再次查看远程仓库配置，确认地址已更新：
+
+```bash
+git remote -v
+```
+
+输出示例：
+```
+origin  git@188.18.45.211:xc-client/screencontrol.git (fetch)
+origin  git@188.18.45.211:xc-client/screencontrol.git (push)
+```
+
+### 4.4 推送代码到新仓库
+
+地址修改完成后，正常推送即可：
+
+```bash
+git push -u origin main
+```
+
+如果新仓库是空的，使用 `-u` 建立跟踪关系；如果已经有提交历史，可能需要先拉取：
+
+```bash
+git pull --rebase origin main
+git push origin main
+```
+
+### 4.5 常见错误与解决
+
+**错误1：命令拼写错误**
+
+```bash
+# ❌ 错误：remotr 拼写错误
+git remotr set-url origin <url>
+
+# ✅ 正确
+git remote set-url origin <url>
+```
+
+**错误2：缺少远程名称参数**
+
+```bash
+# ❌ 错误：缺少远程名称（如 origin）
+git remote set-url git@188.18.45.211:xc-client/screencontrol.git
+
+# 会提示用法错误：
+# usage: git remote set-url [--push] <name> <newurl> [<oldurl>]
+
+# ✅ 正确：指定远程名称为 origin
+git remote set-url origin git@188.18.45.211:xc-client/screencontrol.git
+```
+
+简单理解：
+
+- `git remote -v`：查看当前远程仓库地址（verbose 详细模式）
+- `git remote set-url`：修改已存在的远程仓库地址，不会新增远程配置
+- 修改后本地仓库历史完全保留，只是推送目标改变
+
+{{< notice type="warning" >}}
+修改远程地址前，建议先确认新仓库已创建且有相应权限。如果是迁移项目，记得同步分支和标签到新仓库。
+{{< /notice >}}
+
+## 5. 日常开发最常用流程
+
+### 5.1 提交本地修改
 
 ```bash
 git status
@@ -155,13 +250,13 @@ git add .
 git commit -m "feat: 新增某功能"
 ```
 
-### 4.2 推送到远程
+### 5.2 推送到远程
 
 ```bash
 git push
 ```
 
-### 4.3 开发前先同步远程
+### 5.3 开发前先同步远程
 
 ```bash
 git pull --rebase
@@ -172,7 +267,7 @@ git pull --rebase
 - `git status`：先看工作区是否干净、有哪些文件改了。
 - `git pull --rebase`：先拿到远程最新提交，再把你的提交“接”到后面，历史更直。
 
-## 5. 版本标签（发布用）
+## 6. 版本标签（发布用）
 
 查看已有标签：
 
@@ -202,11 +297,11 @@ git push origin --tags
 
 - 标签常用于“可回溯发布点”，例如上线版本 `v1.0.0`。
 
-## 6. Git 冲突处理（协作重点）
+## 7. Git 冲突处理（协作重点）
 
 常见场景：你和同事改了同一文件同一区域，拉取或合并时会冲突。
 
-### 6.1 推荐处理步骤
+### 7.1 推荐处理步骤
 
 ```bash
 # 1) 先保存当前未提交改动
@@ -236,7 +331,7 @@ git push
 冲突本质是“同一位置有两份不同修改”。保留正确代码并删除冲突标记后，才能继续提交。
 {{< /notice >}}
 
-## 7. 常见检查命令速查
+## 8. 常见检查命令速查
 
 ```bash
 git log --oneline --graph --decorate -20
@@ -254,7 +349,7 @@ git status
 
 ---
 
-## 8. Git 双远程开发全流程（从官方仓库开始）
+## 9. Git 双远程开发全流程（从官方仓库开始）
 
 你的目标可以抽象成 3 件事：
 
@@ -272,7 +367,7 @@ git status
 - `upstream`：官方仓库
 - `origin`：你的 GitLab 仓库
 
-### 8.1 第一步：先克隆官方代码
+### 9.1 第一步：先克隆官方代码
 
 ```bash
 git clone https://github.com/sipeed/picoclaw.git
@@ -282,7 +377,7 @@ cd picoclaw
 克隆官方仓库后，默认只有一个远程，名字通常是 `origin`，但它现在指向官方仓库。  
 你后续要推到自己的 GitLab，所以要把远程关系调整成“双远程”。
 
-### 8.2 第二步：把远程改成双远程结构
+### 9.2 第二步：把远程改成双远程结构
 
 ```bash
 # 把当前 origin（官方）改名为 upstream
@@ -300,7 +395,7 @@ git remote -v
 - `origin` -> `git@188.18.45.211:wangyongwang/picoclaw.git`
 - `upstream` -> `https://github.com/sipeed/picoclaw.git`
 
-### 8.3 第三步：在 GitLab 上创建空仓库后，首次推送 main
+### 9.3 第三步：在 GitLab 上创建空仓库后，首次推送 main
 
 你在 GitLab 网页创建好空仓库（不要勾选 README 初始化）后，执行：
 
@@ -311,7 +406,7 @@ git push -u origin main
 
 `-u` 的意义：把本地 `main` 关联到远程 `origin/main`，以后直接 `git push` 即可。
 
-### 8.4 第四步：开始开发（永远在功能分支上改）
+### 9.4 第四步：开始开发（永远在功能分支上改）
 
 ```bash
 # 从 main 拉一个功能分支
@@ -328,7 +423,7 @@ git push -u origin feat/xxx
 为什么不直接改 `main`：  
 这样可以让主分支保持稳定，合并、回滚、代码评审都更清晰。
 
-### 8.5 第五步：持续同步官方最新代码
+### 9.5 第五步：持续同步官方最新代码
 
 官方更新后，建议固定执行这套动作：
 
@@ -346,7 +441,7 @@ git push origin main
 
 简单理解：`upstream` 是“信息源”，`origin` 是“你的工作仓库”。
 
-### 8.6 第六步：让你的功能分支跟上最新 main
+### 9.6 第六步：让你的功能分支跟上最新 main
 
 ```bash
 git checkout feat/xxx
@@ -372,7 +467,7 @@ git push --force-with-lease origin feat/xxx
 为什么这里要 `--force-with-lease`：  
 `rebase` 会改写提交历史，普通 `push` 会被拒绝；`--force-with-lease` 比 `--force` 更安全。
 
-### 8.7 第七步：合并与收尾
+### 9.7 第七步：合并与收尾
 
 在 GitLab 发起 MR（`feat/xxx` -> `main`），合并后本地清理：
 
@@ -384,7 +479,7 @@ git branch -d feat/xxx
 git push origin --delete feat/xxx
 ```
 
-### 8.8 新电脑接着开发怎么做
+### 9.8 新电脑接着开发怎么做
 
 ```bash
 git clone git@188.18.45.211:wangyongwang/picoclaw.git
@@ -397,7 +492,7 @@ git fetch --all
 git checkout -b feat/xxx origin/feat/xxx
 ```
 
-### 8.9 常见坑与处理
+### 9.9 常见坑与处理
 
 1. `origin` / `upstream` 配反了：
 
