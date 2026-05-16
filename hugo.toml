@@ -28,6 +28,7 @@ summaryLength = 120
   cpp = '/:section/:slug.html'
   git = '/:section/:slug.html'
   other = '/:section/:slug.html'
+  qt = '/:section/:slug.html'
 
 # Markdown 渲染配置
 [markup]
@@ -55,11 +56,19 @@ summaryLength = 120
     pageRef = '/git/git-tutorial.html'
     weight = 30
 
+  # 顶部导航：Qt（直接链接到第一篇文章）
+  [[menu.home]]
+    name = 'Qt'
+    pageRef = '/qt/index.html'
+    weight = 30
+
   # 顶部导航：其他（直接链接到第一篇文章）
   [[menu.home]]
     name = '其他'
     pageRef = '/other/compare.html'
     weight = 40
+
+  
 
 [params]
   # 站点描述（meta description）
